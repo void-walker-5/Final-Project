@@ -1,0 +1,77 @@
+{% extends "base_menu.html" %}
+
+{% block title %}{{ task.title }} - Task Manager{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+    <h1 class="card-title mb-3">
+        {{ task.title }}
+    </h1>
+
+    <div class="mb-3">
+        <span class="badge bg-secondary">
+            {{ task.status }}
+        </span>
+    </div>
+
+    <h5>Description</h5>
+
+    <p class="card-text">
+        {{ task.description|linebreaks }}
+    </p>
+
+    <hr>
+
+    <p class="mb-1">
+        <strong>Created by:</strong>
+        {{ task.owner.username }}
+    </p>
+
+    <p class="mb-1">
+        <strong>Created:</strong>
+        {{ task.created_at }}
+    </p>
+
+    <p>
+        <strong>Last updated:</strong>
+        {{ task.updated_at }}
+    </p>
+
+    <div class="mt-4">
+
+        <a
+            href="{% url 'tasks:all' %}"
+            class="btn btn-secondary"
+        >
+            Back to Tasks
+        </a>
+
+        {% if task.owner == user %}
+
+            <a
+                href="{% url 'tasks:task_update' task.id %}"
+                class="btn btn-primary"
+            >
+                Edit
+            </a>
+
+            <a
+                href="{% url 'tasks:task_delete' task.id %}"
+                class="btn btn-danger"
+            >
+                Delete
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}
